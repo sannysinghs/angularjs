@@ -1,0 +1,14 @@
+{
+  "name": "flickgular",
+  "version": "1.0.0",
+  "description": "Front End",
+  "authors": [
+    "Sam"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.2.0",
+    "angularjs": "~1.2.26"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "flickgular",
+  "version": "1.0.0",
+  "description": "AngularJS with Flicker",
+  "scripts": {
+    "start": "nodemon app/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sannysinghs/angularjs.git"
+  },
+  "keywords": [
+    "Angularjs"
+  ],
+  "author": "Sam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sannysinghs/angularjs/issues"
+  },
+  "homepage": "https://github.com/sannysinghs/angularjs",
+  "dependencies": {
+    "body-parser": "^1.9.0",
+    "express": "^4.9.5",
+    "jade": "^1.7.0",
+    "nodemon": "^1.2.1"
+  }
+}
