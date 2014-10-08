@@ -1,4 +1,4 @@
-//app.js
+//server.js
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -10,6 +10,7 @@ app.set('port',process.env.PORT || 3000);
 
 
 app.use(express.static(path.join(__dirname,'/')));
+app.use('/views',express.static(path.join(__dirname,'app/views')));
 
 app.use(bodyParser.json());
 
@@ -21,4 +22,4 @@ app.get('/',routes);
 
 app.listen(app.get('port'),function(){
 	console.log('Server is running on '+ app.get('port'));
-});
+});  	

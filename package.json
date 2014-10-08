@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AngularJS with Flicker",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

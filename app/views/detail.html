@@ -1,0 +1,21 @@
+<div class="row" ng-controller="PhotoDetailCtrl">
+	<p><a class="btn btn-primary" ng-href="#/photos">Back</a></p>
+	<article class="col-md-4 col-md-offset4">
+		<header>
+			<h3>{{photo.title}}</h3>
+		</header>
+		<div class="thumbnail row">
+			<img ng-src="http://farm{{photo.farm}}.staticflickr.com/{{ photo.server}}/{{photo.id}}_{{photo.secret}}.jpg">
+		</div>
+		<div class="row">
+			<p class="col-md-4 pull-left"> date {{photo.date}} </p> <p class="col-md-4 pull-right"> Author {{photo.owner}}</p>
+		</div>
+		<div class="desc row">
+			<p>{{photo.description}}</p>
+		</div>
+		<footer>
+			<p></p>
+		</footer>
+	</article>
+	
+</div>
