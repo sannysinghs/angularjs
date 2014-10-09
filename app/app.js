@@ -1,5 +1,5 @@
 //app.js
-var app = angular.module('flickgular', ['ngRoute']);
+var app = angular.module('flickgular', ['ngRoute','ngSanitize']);
 
 var api = {
 	url : "https://api.flickr.com/services/rest",

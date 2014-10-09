@@ -11,7 +11,7 @@
 			<span class="pull-left"> <span ng-disabled="photo.isfavourite" class="btn btn-xs btn-primary" ng-click="toggleFav()"> <span ng-show="photo.isfavourite"> Liked </span> <span ng-show="!photo.isfavourite">Like </span> </span> </span><span class="pull-right"> {{photo.owner}}</span>
 		</div>
 		<div class="desc row">
-			<p>{{photo.description}}</p>
+			<p ng-bind-html="photo.description"></p>
 		</div>
 		<div class="row">
 			<p>Comments <span class="pull-right"> {{ photo.comment.count }} </span></p>
