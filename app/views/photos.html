@@ -13,10 +13,11 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat = "photo in photos | filter:keywords">
+
+        <tr ng-repeat = "photo in photos | filter:keywords | limitTo : 10">
           <td>{{ $index+1 }}</td>
-          <td><img class="thumbnail" ng-src="http://farm{{photo.farm}}.staticflickr.com/{{ photo.server}}/{{photo.id}}_{{photo.secret}}_s.jpg"></td>
-          <td><a ng-href="#/photo/{{photo.id}}">{{photo.title}}</a></td>
+          <td><img class="thumbnail" ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_s.jpg"></td>
+          <td><a ng-href="#/photo/{{photo.key}}">{{photo.title}}</a></td>
         </tr>
       </tbody>
     </table>
