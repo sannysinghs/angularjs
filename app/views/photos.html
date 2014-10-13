@@ -1,26 +1,21 @@
 <div ng-controller="PhotosCtrl">
-  <div class="row" ng-show="!error">
-    <input type="text" placeholder="Search..." ng-model="keywords">
-    <input type="button" ng-click="search(keywords)" value="Search">
+  <div ng-show="!error">
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td>No.</td>
-          <td>Image</td>
-          <td>title</td>
-        </tr>
-      </thead>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <input class="form-control" type="text" placeholder="Search..." ng-model="keywords">
+      </div>
+      <div>
+        <input class="btn btn-primary btn-sm"type="button" ng-click="search(keywords)" value="Search">
+      </div>
+    </div>
 
-      <tbody>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | limitTo : 12">
+          <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_m.jpg"> </a> 
+        </div>
+    </div>
 
-        <tr ng-repeat = "photo in photos | filter:keywords | limitTo : 10">
-          <td>{{ $index+1 }}</td>
-          <td><img class="thumbnail" ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_s.jpg"></td>
-          <td><a ng-href="#/photo/{{photo.key}}">{{photo.title}}</a></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
   <div class="row" ng-show="error">

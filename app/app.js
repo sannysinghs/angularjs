@@ -63,6 +63,7 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 								"server" : value.server
 							},
 							"isfavorite" : null,
+							"views" : null,
 							"comment" : {
 								"count" : null,
 								"comments" : []
@@ -94,13 +95,25 @@ app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', funct
 	  
 	  $http.get(api.url+'/?method='+api.methods.info+'&api_key='+api.key+'&photo_id='+$scope.photo.id+'&format='+api.format)
 	  .success(function(data){
-	  	
+	  	// $log.info(data);
+
 	  	var detail = data.photo;
 	  	$scope.photo.date = detail.dateuploaded;
 	  	$scope.photo.owner = detail.owner.username;
 	  	$scope.photo.isfavorite = detail.isfavorite;
 	  	$scope.photo.comment.count = detail.comments._content;
 	  	$scope.photo.description = detail.description._content;
+	  	$scope.photo.views = detail.views;
+
+	  	if ($scope.photo.comment.count > 0) {
+	  		$http.get(api.url+"/?method="+api.methods.comments+'&api_key='+api.key+'&photo_id='+$scope.photo.id+'&format='+api.format).success(function (data) {
+	  			$scope.photo.comment.comments.length = 0;
+	  			angular.forEach(data.comments.comment, function(value,key){
+	  				$scope.photo.comment.comments.push(value);
+	  			});
+
+	  		});
+	  	};
 	  	$scope.photos[pos] = $scope.photo;
 		  	
 	  })

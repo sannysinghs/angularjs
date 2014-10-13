@@ -1,5 +1,5 @@
 <div class="row" ng-controller="PhotoDetailCtrl">
-	<p><a class="btn btn-primary" ng-href="#/photos">Back</a></p>
+	<p><a class="btn btn-xs btn-primary" ng-href="#/photos"> < </a></p>
 	<article class="col-md-4 col-md-offset4">
 		<div class="row">
 			<h4>{{photo.title}}</h4>
@@ -8,17 +8,26 @@
 			<img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}.jpg">
 		</div>
 		<div class="row">	
-			<span class="pull-left"> <span ng-disabled="photo.isfavourite" class="btn btn-xs btn-primary" ng-click="toggleFav()"> <span ng-show="photo.isfavourite"> Liked </span> <span ng-show="!photo.isfavourite">Like </span> </span> </span><span class="pull-right"> {{photo.owner}}</span>
+			<span class="pull-left"> 
+				<span ng-disabled="photo.isfavourite" class="btn btn-link" ng-click="toggleFav()">
+					<span ng-show="photo.isfavourite">Liked </span>
+					<span ng-show="!photo.isfavourite">Like </span> 
+				</span> 
+			</span> 
+
+			 <span class="pull-right"> 
+			 	<span  class="label label-info" > {{photo.views}} views </span>
+			 </span>
 		</div>
 		<div class="desc row">
 			<p ng-bind-html="photo.description"></p>
 		</div>
 		<div class="row">
-			<p>Comments <span class="pull-right"> {{ photo.comment.count }} </span></p>
+			<p>Comments <span class="label label-info pull-right"> {{ photo.comment.count }} </span></p>
 			<hr>
 			<div>
-				<ul ng-repeat="comment in photo.comments">
-					<li> {{comment.text}} </li>
+				<ul ng-repeat="comment in photo.comment.comments">
+					<li> {{comment._content}} </li>
 				</ul>
 			</div>
 			<form name="comment_form" ng-submit="addComment(comment)">
