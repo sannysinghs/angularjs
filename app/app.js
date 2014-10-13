@@ -32,6 +32,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 app.controller('FlickgularCtrl', ['$scope', function ($scope) {
 	$scope.photos = [];
+	$scope.pages = [];
+	$scope.count = 0;
 }]);
 app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$http) {
 		
@@ -50,6 +52,9 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 					$scope.error = false;
 					$scope.photos.length = 0;
 					angular.forEach(data.photos.photo, function(value,key){
+						if (key % 12 === 0 ) {
+					  		$scope.count++;
+					  	}
 						var photo = {
 							"key" : key,
 							"id" : value.id,
@@ -122,6 +127,15 @@ app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', funct
 	  });
 
 	  $scope.comment = {};
+	  
+
+	  $scope.groupToPages = function(){
+	  	angular.forEach($photoco, iterator)
+	  	
+	  };
+
+
+
 
 	  $scope.addComment = function(comment){
 	  	$scope.photo.comments.push(comment);
@@ -134,3 +148,5 @@ app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', funct
 	  };
 
 }]);
+
+app.filter('pagination',function(){});

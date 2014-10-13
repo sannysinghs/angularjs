@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | limitTo : 12">
+        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | pagination : startPage : pageSize ">
           <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_m.jpg"> </a> 
         </div>
     </div>
