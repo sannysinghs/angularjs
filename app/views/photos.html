@@ -11,15 +11,22 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | pagination : startPage : pageSize ">
-          <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_m.jpg"> </a> 
+        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | pagination : start : size ">
+          <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_s.jpg"> </a> 
         </div>
     </div>
 
+  </div>
+
+  <div class="row">
+      <ul class="pagination">
+        <li ng-repeat="page in pages"><a ng-click="setPage(page)">{{page + 1}}</a></li>
+      </ul>
   </div>
 
   <div class="row" ng-show="error">
     <h3 style="color:red;">{{error_msg}}</h3>
     <input type="button" value="back" class="btn btn-primary" ng-click="resetError()" >
   </div>
+
 </div>

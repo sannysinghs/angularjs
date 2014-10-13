@@ -34,6 +34,8 @@ app.controller('FlickgularCtrl', ['$scope', function ($scope) {
 	$scope.photos = [];
 	$scope.pages = [];
 	$scope.count = 0;
+	$scope.start = 0;
+	$scope.size = 12;
 }]);
 app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$http) {
 		
@@ -77,6 +79,7 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 						$scope.photos.push(photo);
 						
 					});
+					$scope.groupToPages();
 				}
 				
 			})
@@ -85,6 +88,19 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 			});
 			
 		};
+
+		$scope.groupToPages = function(){
+		  	for (var i = 0 ; i < $scope.count; i++) {
+		  		$scope.pages.push(i);
+		  	};
+		  	
+	  	
+	    };
+
+	    $scope.setPage = function(index){
+	    	$scope.start =  index;
+	    };
+
 
 		$scope.resetError = function(){
 			$scope.error = false;
@@ -127,14 +143,6 @@ app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', funct
 	  });
 
 	  $scope.comment = {};
-	  
-
-	  $scope.groupToPages = function(){
-	  	angular.forEach($photoco, iterator)
-	  	
-	  };
-
-
 
 
 	  $scope.addComment = function(comment){
@@ -149,4 +157,13 @@ app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', funct
 
 }]);
 
-app.filter('pagination',function(){});
+app.filter('pagination',function($log){
+
+	return function(input,start,size){
+		if (input) {
+			var start = start * size;
+			return input.slice(start,start + size);
+		}
+	}
+
+});
