@@ -1,32 +1,38 @@
-<div ng-controller="PhotosCtrl">
-  <div ng-show="!error">
+<div class="row" ng-controller="PhotosCtrl">
 
-    <div class="row">
-      <div class="form-group col-md-4">
-        <input class="form-control" type="text" placeholder="Search..." ng-model="keywords">
-      </div>
-      <div>
-        <input class="btn btn-primary btn-sm"type="button" ng-click="search(keywords)" value="Search">
-      </div>
-    </div>
+  <div class="col-md-5">
+    <div ng-show="!error">
 
-    <div class="row">
-        <div class="col-md-2 col-sm-3 img-thumb" ng-repeat = "photo in photos | filter:keywords | pagination : start : size ">
-          <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_s.jpg"> </a> 
+      <div class="row">
+        <div class="form-group col-md-10">
+          <input class="form-control" type="text" placeholder="Search..." ng-model="keywords">
         </div>
+        <div class="col-md-2">
+          <input class="btn btn-primary btn-sm"type="button" ng-click="search(keywords)" value="Search">
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-3 col-sm-2 img-thumb" ng-repeat = "photo in photos | filter:keywords | pagination : pagiSrc.getStart() : pagiSrc.getSize() ">
+            <a class="thumbnail"  ng-href="#/photo/{{photo.key}}"> <img ng-src="http://farm{{photo.info.farm}}.staticflickr.com/{{ photo.info.server}}/{{photo.id}}_{{photo.info.secret}}_s.jpg"> </a> 
+          </div>
+      </div>
+
+       <div ng-hide="!pagiSrc.getCount()"  class="row">
+          <ul class="pagination">
+            <li><a ng-click="pagiSrc.prevPage()">&laquo;</a></li>
+            <li ng-repeat="page in pagiSrc.getPages()" ng-class="{active : pagiSrc.isActivePage(page)}"><a  ng-click="pagiSrc.setPage(page)">{{page + 1}}</a></li>
+            <li><a ng-click="pagiSrc.nextPage()">&raquo;</a></li>
+          </ul>
+      </div>
+
+
+    </div>
+
+    <div class="row" ng-show="error">
+      <h3 style="color:red;">{{error_msg}}</h3>
+      <input type="button" value="back" class="btn btn-primary" ng-click="resetError()" >
     </div>
 
   </div>
-
-  <div class="row">
-      <ul class="pagination">
-        <li ng-repeat="page in pages"><a ng-click="setPage(page)">{{page + 1}}</a></li>
-      </ul>
-  </div>
-
-  <div class="row" ng-show="error">
-    <h3 style="color:red;">{{error_msg}}</h3>
-    <input type="button" value="back" class="btn btn-primary" ng-click="resetError()" >
-  </div>
-
 </div>

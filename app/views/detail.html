@@ -9,14 +9,14 @@
 		</div>
 		<div class="row">	
 			<span class="pull-left"> 
-				<span ng-disabled="photo.isfavourite" class="btn btn-link" ng-click="toggleFav()">
-					<span ng-show="photo.isfavourite">Liked </span>
-					<span ng-show="!photo.isfavourite">Like </span> 
-				</span> 
+				<a ng-disabled="photo.isfavourite" ng-click="toggleFav()">
+					<span ng-show="photo.isfavourite">Liked</span>
+					<span ng-show="!photo.isfavourite">Like</span> 
+				</a> 
 			</span> 
 
 			 <span class="pull-right"> 
-			 	<span  class="label label-info" > {{photo.views}} views </span>
+			 	<span  class="label label-primary" > {{photo.views}}  <span class="glyphicon glyphicon-eye-open"></span> </span>
 			 </span>
 		</div>
 		<div class="desc row">
@@ -25,11 +25,13 @@
 		<div class="row">
 			<p>Comments <span class="label label-info pull-right"> {{ photo.comment.count }} </span></p>
 			<hr>
-			<div>
-				<ul ng-repeat="comment in photo.comment.comments">
-					<li> {{comment._content}} </li>
-				</ul>
+			<div class="comments">
+				<div ng-repeat="comment in photo.comment.comments">
+					<p ng-bind-html="comment._content"></p>
+					<hr/>
+				</div>
 			</div>
+
 			<form name="comment_form" ng-submit="addComment(comment)">
 				<div novalidate class="form-group">
 					<textarea ng-model="comment.text" name="comment_txt" class="form-control" required></textarea>

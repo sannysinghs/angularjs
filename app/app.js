@@ -32,30 +32,29 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 app.controller('FlickgularCtrl', ['$scope', function ($scope) {
 	$scope.photos = [];
-	$scope.pages = [];
-	$scope.count = 0;
-	$scope.start = 0;
-	$scope.size = 12;
 }]);
-app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$http) {
+
+app.controller('PhotosCtrl', ['$scope','$log','$http','pagiService', function ($scope,$log,$http,pagiService) {
 		
-		
+		$scope.pagiSrc = pagiService;
+
 		$scope.search = function(text){
-			var photos = [];
+			// var photos = [];
 			$http.get(api.url+'/?method='+api.methods.search+'&api_key='+api.key+'&text='+text+'&sort='+api.sort+'&format='+api.format)
 			.success(function(data){
-				
+
 				$scope.error = false;
 				if (data.stat === "fail") {
-					$log.info(data);
 					$scope.error = true;
 					$scope.error_msg = data.message;
 				}else{
 					$scope.error = false;
 					$scope.photos.length = 0;
+					var i = 0;
 					angular.forEach(data.photos.photo, function(value,key){
 						if (key % 12 === 0 ) {
-					  		$scope.count++;
+							$scope.pagiSrc.addPage(i++)
+					  		$scope.pagiSrc.setCount(i);
 					  	}
 						var photo = {
 							"key" : key,
@@ -77,30 +76,16 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 							}
 						};
 						$scope.photos.push(photo);
-						
 					});
-					$scope.groupToPages();
 				}
-				
 			})
 			.error(function(data){
 				$log.error(data);
 			});
+
+			pagiSrc.reset();
 			
 		};
-
-		$scope.groupToPages = function(){
-		  	for (var i = 0 ; i < $scope.count; i++) {
-		  		$scope.pages.push(i);
-		  	};
-		  	
-	  	
-	    };
-
-	    $scope.setPage = function(index){
-	    	$scope.start =  index;
-	    };
-
 
 		$scope.resetError = function(){
 			$scope.error = false;
@@ -110,14 +95,13 @@ app.controller('PhotosCtrl', ['$scope','$log','$http', function ($scope,$log,$ht
 
 app.controller('PhotoDetailCtrl', ['$scope','$log','$routeParams','$http', function ($scope,$log,$routeParams,$http) {
 
-	 $log.debug($scope.photos);
+	 
 	  var pos = parseInt($routeParams.pos);
 	  $scope.photo = $scope.photos[pos];
 	  
 	  $http.get(api.url+'/?method='+api.methods.info+'&api_key='+api.key+'&photo_id='+$scope.photo.id+'&format='+api.format)
 	  .success(function(data){
-	  	// $log.info(data);
-
+	  	
 	  	var detail = data.photo;
 	  	$scope.photo.date = detail.dateuploaded;
 	  	$scope.photo.owner = detail.owner.username;
@@ -167,3 +151,55 @@ app.filter('pagination',function($log){
 	}
 
 });
+
+app.factory('pagiService', [function () {
+	var pages = []
+	var size = 12;
+	var start = 0 ;
+	var count = 0;
+	return {
+		getPages : function(){
+			return pages;
+		},
+		getSize : function () {
+			return size;
+		},
+		setSize : function(data) {
+			size = data;
+		},
+		getStart : function () {
+			return start;
+		},
+		setStart : function(data) {
+			start = data;
+		},
+		getCount : function () {
+			return count;
+		},
+		setCount : function(data) {
+			count = data;
+		},
+		nextPage : function(){
+			if (start < count ) {
+				start = start + 1;	
+			};
+		},
+		prevPage : function(){
+			if (start > 0 ) {
+				start = start - 1;	
+			};
+		},
+		setPage : function(data){
+	    	this.setStart(data);
+	    },
+	    isActivePage : function(data){
+			return start === data;
+		},
+		addPage : function(data){
+			pages.push(data);
+		},
+		reset : function(){
+			this.setStart(0);
+		}
+	};
+}])
