@@ -1,5 +1,8 @@
 angularjs
 =========
-<h1> Installation </h2>
- 1. Make a git clone : 
- 2. run this on terminal -  node server.js
+<h1> Installation </h1>
+<ul>
+	<li>Make a git clone or pull request</li>
+	<li>run this on terminal -  node server.js</li>
+</ul>
+ 
