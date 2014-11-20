@@ -21,5 +21,5 @@ app.get('/',routes);
 
 
 app.listen(app.get('port'),function(){
-	console.log('Server is running on '+ app.get('port'));
+	console.log('Server is running on '+ app.get('port') + "Run - http://localhost:3000/#/photos" );
 });  	
