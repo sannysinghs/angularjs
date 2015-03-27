@@ -148,7 +148,7 @@ app.filter('pagination',function($log){
 			var start = start * size;
 			return input.slice(start,start + size);
 		}
-	}
+	};
 
 });
 
